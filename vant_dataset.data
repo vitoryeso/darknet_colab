@@ -1,0 +1,5 @@
+classes= 3
+train  = /content/darknet_colab/data/train.txt
+valid  = /content/darknet_colab/data/valid.txt
+names = /content/darknet_colab/classes.names
+backup = /content/darknet_colab/backup/
