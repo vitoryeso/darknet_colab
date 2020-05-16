@@ -47,7 +47,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *backup_directory = option_find_str(options, "backup", "/backup/");
     printf(backup_directory);
     printf("\n");
-    char *prov = replace_char(backup_directory, '¬', ' ');
+    char *prov = replace_char(backup_directory, '$', ' ');
     printf(prov);
     return;
 
