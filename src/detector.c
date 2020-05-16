@@ -30,7 +30,10 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *valid_images = option_find_str(options, "valid", train_images);
     char *backup_directory = option_find_str(options, "backup", "/backup/");
     printf(backup_directory);
+    char *wwwww = "/content/drive/My\ Drive/";
+    printf(wwwww)
     return;
+
 
     network net_map;
     if (calc_map) {
