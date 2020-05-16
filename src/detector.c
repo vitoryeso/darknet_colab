@@ -8,6 +8,7 @@
 #include "box.h"
 #include "demo.h"
 #include "option_list.h"
+#include <string.h>
 
 #ifndef __COMPAR_FN_T
 #define __COMPAR_FN_T
@@ -47,9 +48,13 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *backup_directory = option_find_str(options, "backup", "/backup/");
     printf(backup_directory);
     printf("\n");
-    char *prov = replace_char(backup_directory, '$', ' ');
+    char *prov = replace_char(backup_directory, '¬', ' ');
     printf(prov);
+    printf("\n");
+    char *prov2 = strtok(cfgfile, '.');
+    printf(prov2);
     return;
+
 
 
     network net_map;
