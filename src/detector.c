@@ -53,6 +53,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     printf("\n");
     char *prov2 = strtok(cfgfile, '.');
     printf(prov2);
+    char *prov3 = strcat(prov1, prov2);
+    printf("\n");
+    printf(prov3);
     return;
 
 
