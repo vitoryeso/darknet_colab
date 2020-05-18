@@ -9,6 +9,7 @@
 #include "demo.h"
 #include "option_list.h"
 #include <string.h>
+#include "lustr.h"
 
 #ifndef __COMPAR_FN_T
 #define __COMPAR_FN_T
@@ -21,20 +22,6 @@ typedef __compar_fn_t comparison_fn_t;
 #include "http_stream.h"
 
 
-char *replace_char(char *input, char find, char replace) 
-{
-    char * output = (char*)malloc(strlen(input));
-
-    for (int i = 0; i < strlen(input); i++)
-    {
-            if (input[i] == find) output[i] = replace;
-                else output[i] = input[i];
-    }
-
-    output[strlen(input)] = '\0';
-
-    return output;
-}
 
 int check_mistakes = 0;
 
@@ -49,18 +36,13 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
    
     //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
     printf(backup_directory);
-    char *prov = replace_char(backup_directory, '¬', ' ');
-    printf(prov);
-    char *prov2 = strtok(cfgfile, '.');
-    printf(prov2);
-    strcat(prov, prov2);
-    printf(prov);
+    char *prov = luReplacechar(backup_directory, '¬', ' ');
+    char **prov2 = luSplit(cfgfile, '.');
+    strcat(prov, prov2[0]);
     strcat(prov, "/weights/");
     
     printf(prov);
     return;
-
-
 
 
     network net_map;
