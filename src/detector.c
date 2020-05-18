@@ -40,7 +40,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     strcat(prov, prov2[0]);
     strcat(prov, "/weights");
     backup_directory = prov;
-    cmd = "mkdir ";
+    char *cmd = "mkdir \0";
     strcat(cmd, backup_directory);
     system(cmd) 
     strcat(backup_directory, "/");
