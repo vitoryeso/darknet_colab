@@ -42,7 +42,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     backup_directory = prov;
     char *cmd = "mkdir \0";
     strcat(cmd, backup_directory);
-    system(cmd) 
+    system(cmd); 
     strcat(backup_directory, "/");
 
     network net_map;
