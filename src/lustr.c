@@ -18,7 +18,7 @@ char *luCopy(char *output, char *input, const int n_chars)
 }
 
 
-char *replace_char(char *input, char find, char replace) 
+char *luReplaceChar(char *input, char find, char replace) 
 {
     char * output = (char*)malloc(strlen(input));
 
