@@ -38,11 +38,12 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *prov = luReplaceChar(backup_directory, '$', ' ');
     char **prov2 = luSplit(cfgfile, '.');
     strcat(prov, prov2[0]);
-    strcat(prov, "/weights/");
+    strcat(prov, "/weights");
     backup_directory = prov;
-    printf("%s \n", backup_directory);    
-    return;
-
+    cmd = "mkdir ";
+    strcat(cmd, backup_directory);
+    system(cmd) 
+    strcat(backup_directory, "/");
 
     network net_map;
     if (calc_map) {
