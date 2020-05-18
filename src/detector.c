@@ -35,13 +35,13 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *backup_directory = option_find_str(options, "backup", "/backup/");
    
     //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
-    printf(backup_directory);
+    printf("%s \n", backup_directory);
     char *prov = luReplaceChar(backup_directory, '¬', ' ');
     char **prov2 = luSplit(cfgfile, '.');
     strcat(prov, prov2[0]);
     strcat(prov, "/weights/");
     
-    printf(prov);
+    printf("%s \n", prov);
     return;
 
 
