@@ -35,7 +35,7 @@ else
     echo "$(date)" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
     ./darknet detector train "$1" "$2" "$3" -dont_show > "${dir}_${num_trains}_log.txt"
-    
+fi    
 
 
 
