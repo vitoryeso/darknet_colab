@@ -38,6 +38,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *prov = luReplaceChar(backup_directory, '$', ' ');
     char **prov2 = luSplit(cfgfile, '.');
     prov2 = luSplit(prov2[0], '/');
+    strcat(prov, "train_");
     strcat(prov, prov2[1]);
     strcat(prov, "/weights/");
     backup_directory = prov;
