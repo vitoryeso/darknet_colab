@@ -10,7 +10,7 @@ IFS='/'
 read -ra STRS <<< "$2"
 IFS='.'
 read -ra STRS2 <<< "${STRS[-1]}"
-cfg=${STRS[0]}
+cfg=${STRS2[0]}
 IFS=' '
 
 dir="${path}train_${cfg}"
@@ -20,14 +20,12 @@ if [ "$3" == "" ]; then
     mkdir "${dir}/weights"
     mkdir "${dir}/logs"
     touch "${dir}/info.txt"
-    echo "train ${num_trains}" >> "${dir}/info.txt"
-    echo >> "${dir}/info.txt" 
-    echo "$(date)" >> "${dir}/info.txt"
+    echo "train ${num_trains}:">> "${dir}/info.txt"
+    echo "  date: $(date)" >> "${dir}/info.txt"
+    echo "  config: ${cfg}" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
-    echo "config: $2" >> "${dir}/info.txt"
-    echo >> "${dir}/info.txt"
-    wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137
-    ./darknet detector train "$1" "$2" yolov4.conv.137 -dont_show > "${dir}/logs/${num_trains}_log.txt"
+    #wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137
+    ./darknet detector train "$1" "$2" yolov4.conv.137 -dont_show > "${dir}"/logs/"${num_trains}"_log.txt
 else
     num_trains=$(ls "${dir}/logs/" | grep -i "log" | wc -l)
     num_trains= "$num_trains + 1"
