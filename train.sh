@@ -25,7 +25,7 @@ if [ "$3" == "" ]; then
     echo "  config: ${cfg}" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
     wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137
-    ./darknet detector train "$1" "$2" yolov4.conv.137 \-dont_show \> "${dir}"/logs/"${num_trains}"_log.txt 
+    ./darknet detector train "$1" "$2" yolov4.conv.137 -dont_show \> "${dir}"/logs/"${num_trains}"_log.txt 
 else
     num_trains=$(ls "${dir}/logs/" | grep -i "log" | wc -l)
     num_trains= "$num_trains + 1"
@@ -33,7 +33,7 @@ else
     echo >> "${dir}/info.txt" 
     echo "$(date)" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
-    ./darknet detector train "$1" "$2" "$3" -dont_show > "${dir}"/logs/"${num_trains}"_log.txt &
+    ./darknet detector train "$1" "$2" "$3" -dont_show \> "${dir}"/logs/"${num_trains}"_log.txt &
 fi    
 
 
