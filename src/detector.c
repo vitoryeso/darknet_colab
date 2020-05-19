@@ -37,13 +37,10 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
     char *prov = luReplaceChar(backup_directory, '$', ' ');
     char **prov2 = luSplit(cfgfile, '.');
-    strcat(prov, prov2[0]);
-    strcat(prov, "/weights");
+    prov2 = luSplit(prov2[0], '/');
+    strcat(prov, prov2[1]);
+    strcat(prov, "/weights/");
     backup_directory = prov;
-    char *cmd = "mkdir ";
-    strcat(cmd, backup_directory);
-    system(cmd); 
-    strcat(backup_directory, "/");
 
     network net_map;
     if (calc_map) {
