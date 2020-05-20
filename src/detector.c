@@ -30,20 +30,14 @@ static int coco_ids[] = { 1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,
 void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, int ngpus, int clear, int dont_show, int calc_map, int mjpeg_port, int show_imgs, int benchmark_layers, char* chart_path)
 {
     list *options = read_data_cfg(datacfg);
-    for(int i=0;i<sizeof(list);i++) printf("%s \n", options[i]);
     char *train_images = option_find_str(options, "train", "data/train.txt");
     char *valid_images = option_find_str(options, "valid", train_images);
     char *backup_directory = option_find_str(options, "backup", "/backup/");
    
     //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
-    char *prov = luReplaceChar(backup_directory, '$', ' ');
-    char **prov2 = luSplit(cfgfile, '.');
-    prov2 = luSplit(prov2[0], '/');
-    strcat(prov, "train_");
-    strcat(prov, prov2[1]);
-    strcat(prov, "/weights/");
-    // backup_directory = prov;
-
+    int provlen = strlen(backup_directory);
+    char *prov = malloc( (provlen + 1) * sizeof(char) );
+    luCopy(prov, backup_directory, provlen);
     network net_map;
     if (calc_map) {
         FILE* valid_file = fopen(valid_images, "r");
