@@ -39,7 +39,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
     luCopy(colab_directory, backup_directory, provlen);
     colab_directory = luReplaceChar(colab_directory, '$', ' ');
-    strcat(colab_directory, "weights/");
+    strcat(colab_directory, "weights");
     printf("colab_directory: %s \n" , colab_directory);
     network net_map;
     if (calc_map) {
