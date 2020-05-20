@@ -36,8 +36,10 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
    
     //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
     int provlen = strlen(backup_directory);
-    char *prov = malloc( (provlen + 1) * sizeof(char) );
-    luCopy(prov, backup_directory, provlen);
+    char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
+    luCopy(colab_directory, backup_directory, provlen);
+    strcat(colab_directory, "/weights/");
+    printf("colab_directory: %s \n" , colab_directory);
     network net_map;
     if (calc_map) {
         FILE* valid_file = fopen(valid_images, "r");
