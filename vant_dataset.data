@@ -2,5 +2,5 @@ classes= 3
 train  = /content/darknet_colab/data/vant/train.txt
 valid  = /content/darknet_colab/data/vant/valid.txt
 names = /content/darknet_colab/data/vant/classes.names
-backup = /content/drive/My$Drive/COLAB/Yolov4/
+backup = /content/drive/My\$Drive/COLAB/Yolov4/
 
