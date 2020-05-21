@@ -32,23 +32,17 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *valid_images = option_find_str(options, "valid", train_images);
     char *backup_directory = option_find_str(options, "backup", "/backup/");
 
-    printf("kkkkkkksdfusdfkkk \n");
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
     char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
     luCopy(cfgname, cfgfile, cfglen);
     char **prov = luSplit(cfgname, '/');
-    free(cfgname);
     char **prov2 = luSplit(prov[1], '.');
-    for(int i=0; i<2; i++) free(prov[i]);
-    free(prov);
     luCopy(colab_directory, backup_directory, provlen);
     luReplaceChar(colab_directory, '$', ' ');
     strcat(colab_directory, "train_");
     strcat(colab_directory, prov2[0]);
-    for(int i=0; i<2;i++) free(prov2[i]);
-    free(prov2);
     strcat(colab_directory, "/weights");
     
     printf("Colab Directory: %s \n", colab_directory);
