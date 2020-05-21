@@ -7,7 +7,7 @@ char *luCopy(char *output, char *input, const int n_chars)
 {
     //we assume that the output has already been allocated.
     int i=0;
-    while( *(input) != '\0' && i != n_chars )
+    while( *(input) != '\0' && i < n_chars )
     {
         output[i] = *(input);
         input++;
@@ -20,17 +20,11 @@ char *luCopy(char *output, char *input, const int n_chars)
 
 char *luReplaceChar(char *input, char find, char replace) 
 {
-    char * output = (char*)malloc(strlen(input));
-
     for (int i = 0; i < strlen(input); i++)
     {
-            if (input[i] == find) output[i] = replace;
-                else output[i] = input[i];
+            if (input[i] == find) input[i] = replace;
     }
-
-    output[strlen(input)] = '\0';
-
-    return output;
+    return input;
 }
 
 char **luSplit(char *input, char delim)
@@ -54,20 +48,20 @@ char **luSplit(char *input, char delim)
         if( *(checkpoint) == delim )
         {
             prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
-            //strncpy(prov[count], input, n_chars);
             luCopy(prov[count], input, n_chars);
             input += (n_chars + 1);
             count++;
             n_chars = 0;
             checkpoint++;
-            continue;
         }
-        n_chars++;
-        checkpoint++;
-    }
+        else
+        {
+            n_chars++;
+            checkpoint++;
+        }
+    }    
     prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
     luCopy(prov[count], input, n_chars);
-    //strncpy(prov[count], input, n_chars);
     return prov;
 }
 

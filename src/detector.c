@@ -21,8 +21,6 @@ typedef __compar_fn_t comparison_fn_t;
 
 #include "http_stream.h"
 
-
-
 int check_mistakes = 0;
 
 static int coco_ids[] = { 1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,31,32,33,34,35,36,37,38,39,40,41,42,43,44,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,70,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90 };
@@ -33,8 +31,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *train_images = option_find_str(options, "train", "data/train.txt");
     char *valid_images = option_find_str(options, "valid", train_images);
     char *backup_directory = option_find_str(options, "backup", "/backup/");
-   
-    //MODIFICATIONS FOR SAVE WEIGHTS IN COLAB DIRECTORY
+    
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
@@ -45,17 +42,17 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char **prov2 = luSplit(prov[1], '.');
     for(int i=0; i<2; i++) free(prov[i]);
     free(prov);
-    printf("LU KK \n");
     luCopy(colab_directory, backup_directory, provlen);
-    colab_directory = luReplaceChar(colab_directory, '$', ' ');
+    luReplaceChar(colab_directory, '$', ' ');
     strcat(colab_directory, "train_");
     strcat(colab_directory, prov2[0]);
-    for(int i=0; i<2; i++) free(prov2[i]);
+    for(int i=0; i<2;i++) free(prov2[i]);
     free(prov2);
     strcat(colab_directory, "/weights");
-    printf("colab_directory: %s \n" , colab_directory);
     
+    printf("Colab Directory: %s \n", colab_directory);
     network net_map;
+    
     if (calc_map) {
         FILE* valid_file = fopen(valid_images, "r");
         if (!valid_file) {
@@ -369,7 +366,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 best_map = mean_average_precision;
                 printf("New best mAP!\n");
                 char buff[256];
-                sprintf(buff, "%s/%s_best.weights", colab_directory, base);
+                sprintf(buff, "%s/%s_best.weights", backup_directory, base);
                 save_weights(net, buff);
             }
 
@@ -391,10 +388,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_%d.weights", colab_directory, base, iteration);
+            sprintf(buff, "%s/%s_%d.weights", backup_directory, base, iteration);
             save_weights(net, buff);
         }
-
 
         if (iteration >= (iter_save_last + 100) || (iteration % 100 == 0 && iteration > 1)) {
             iter_save_last = iteration;
@@ -402,7 +398,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_last.weights", colab_directory, base);
+            sprintf(buff, "%s/%s_last.weights", backup_directory, base);
             save_weights(net, buff);
         }
         free_data(train);
@@ -411,7 +407,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
     char buff[256];
-    sprintf(buff, "%s/%s_final.weights", colab_directory, base);
+    sprintf(buff, "%s/%s_final.weights", backup_directory, base);
     save_weights(net, buff);
 
 #ifdef OPENCV
