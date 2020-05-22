@@ -28,8 +28,9 @@ if [ "$3" == "" ]; then
     ./darknet detector train "$1" "$2" yolov4.conv.137 -dont_show > "${dir}"/logs/"${num_trains}"_log.txt 
 else
     num_trains=$(ls "${dir}/logs/" | grep -i "log" | wc -l)
-    num_trains= "$num_trains + 1"
-    echo "train ${num_trains}" >> "${dir}/info.txt"
+    prov=1
+    num_trains=$(($num_trains + $prov))
+    echo "train ${num_trains}:" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt" 
     echo "$(date)" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
