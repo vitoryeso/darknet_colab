@@ -40,7 +40,7 @@ char **luSplit(char *input, char delim)
     }
     checkpoint = input;
 
-    char **prov = (char **) malloc( (count + 1) * sizeof(char *) );
+    char **prov = (char **) malloc( (count + 2) * sizeof(char *) );
     int n_chars = 0;
     count = 0;
     while( *(checkpoint) != '\0')

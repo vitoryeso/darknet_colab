@@ -43,9 +43,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 
     luReplaceChar(colab_directory, '$', ' ');
     strcat(colab_directory, "train_");
-    char prov3 = malloc( (strlen(prov2[0])) * sizeof(char));
-    prov3 = luCopy(prov3, prov2[0], strlen(prov2[0]));
-    strcat(colab_directory, prov3);
+    printf("len of prov2[0]: %d \n", strlen(prov2[0]));
+
+    strcat(colab_directory, prov2[0]);
     strcat(colab_directory, "/weights");
     
     printf("Colab Directory: %s \n", colab_directory);
