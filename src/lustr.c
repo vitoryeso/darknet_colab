@@ -29,7 +29,6 @@ void luReplaceChar(char *input, char find, char replace)
     {
             if (input[i] == find) input[i] = replace;
     }
-    output[strlen(input)] = '\0';
 }
 
 char **luSplit(char *input, char delim)
