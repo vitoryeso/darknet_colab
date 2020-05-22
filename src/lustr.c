@@ -3,11 +3,10 @@
 #include <string.h>
 #include "lustr.h"
 
-char *luCat(char *left, char *right)
+void luCat(char *left, char *right)
 {
     left = realloc(left, sizeof(char) * (strlen(left) + strlen(right) + 1) );
-    strcat(left, right);
-    return left;
+    strcat(left, right); 
 }
 char *luCopy(char *output, char *input, const int n_chars)
 {
