@@ -35,7 +35,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
-    char *colab_directory = malloc( (provlen + 1) *sizeof(char) );
+    char *colab_directory = (char *) malloc( (provlen + 1) *sizeof(char) );
     luCopy(cfgname, cfgfile, cfglen);
     char **prov = luSplit(cfgname, '/');
     char **prov2 = luSplit(prov[1], '.');
