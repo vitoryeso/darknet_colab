@@ -27,7 +27,7 @@ void luReplaceChar(char *input, char find, char replace)
 {
     for (int i = 0; i < strlen(input); i++)
     {
-            if (input[i] == find) output[i] = input[i] = replace;
+            if (input[i] == find) input[i] = replace;
     }
     output[strlen(input)] = '\0';
 }
