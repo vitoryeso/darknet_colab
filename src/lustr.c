@@ -23,19 +23,13 @@ char *luCopy(char *output, char *input, const int n_chars)
 }
 
 
-char *luReplaceChar(char *input, char find, char replace) 
+void luReplaceChar(char *input, char find, char replace) 
 {
-    char * output = (char*)malloc(strlen(input));
-
     for (int i = 0; i < strlen(input); i++)
     {
-            if (input[i] == find) output[i] = replace;
-                else output[i] = input[i];
+            if (input[i] == find) output[i] = input[i] = replace;
     }
-
     output[strlen(input)] = '\0';
-
-    return output;
 }
 
 char **luSplit(char *input, char delim)
