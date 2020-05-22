@@ -43,6 +43,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 
     luReplaceChar(colab_directory, '$', ' ');
     strcat(colab_directory, "train_");
+    printf("prov2: %s \n", prov2);
 /*
     strcat(colab_directory, prov2[0]);
     strcat(colab_directory, "/weights");
