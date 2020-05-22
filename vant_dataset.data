@@ -2,5 +2,5 @@ classes= 3
 train  = data/vant/train.txt
 valid  = data/vant/valid.txt
 names = classes.names
-backup = /content/drive/My\$Drive/COLAB/Yolov4/
+backup = /content/drive/My$Drive/COLAB/Yolov4/
 
