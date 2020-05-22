@@ -40,10 +40,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char **prov = luSplit(cfgname, '/');
     char **prov2 = luSplit(prov[1], '.');
     luCopy(colab_directory, backup_directory, provlen);
-    luReplaceChar(colab_directory, '$', ' ');
+    colab_directory = luReplaceChar(colab_directory, '$', ' ');
     luCat(colab_directory, "train_");
-    luCat(colab_directory, "sdiofjasdiofjiosdjfioasdjfijsdoifjsdiojfsdio");
- //   luCat(colab_directory, prov2[0]);
+    luCat(colab_directory, prov2[0]);
     luCat(colab_directory, "/weights");
     printf("Colab Directory: %s \n", colab_directory);
 
