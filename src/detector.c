@@ -38,13 +38,18 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
     luCopy(cfgname, cfgfile, cfglen);
     char **prov = luSplit(cfgname, '/');
+    free(cfgname);
     char **prov2 = luSplit(prov[1], '.');
+    for(int i=0; i<2; i++ free(prov[i]);
+    free(prov);
     luCopy(colab_directory, backup_directory, provlen);
     luReplaceChar(colab_directory, '$', ' ');
     luCat(colab_directory, "train_");
-//    luCat(colab_directory, prov2[0]);
- //   luCat(colab_directory, "/weights");
-  //  printf("Colab Directory: %s \n", colab_directory);
+    luCat(colab_directory, prov2[0]);
+    for(int i=0; i<2; i++) free(prov2[i]);
+    free(prov2);
+    luCat(colab_directory, "/weights");
+    printf("Colab Directory: %s \n", colab_directory);
 
     network net_map;
     
