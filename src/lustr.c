@@ -40,14 +40,14 @@ char **luSplit(char *input, char delim)
     }
     checkpoint = input;
 
-    char **prov = malloc( (count + 2) * sizeof(char *) );
+    char **prov = (char **) malloc( (count + 1) * sizeof(char *) );
     int n_chars = 0;
     count = 0;
     while( *(checkpoint) != '\0')
     {
         if( *(checkpoint) == delim )
         {
-            prov[count] = malloc( (n_chars + 1) * sizeof(char) );
+            prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
             luCopy(prov[count], input, n_chars);
             input += (n_chars + 1);
             count++;
@@ -60,7 +60,7 @@ char **luSplit(char *input, char delim)
             checkpoint++;
         }
     }    
-    prov[count] = malloc( (n_chars + 1) * sizeof(char) );
+    prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
     luCopy(prov[count], input, n_chars);
     return prov;
 }
