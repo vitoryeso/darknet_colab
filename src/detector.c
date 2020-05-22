@@ -40,7 +40,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char **prov = luSplit(cfgname, '/');
     free(cfgname);
     char **prov2 = luSplit(prov[1], '.');
-    for(int i=0; i<2; i++ free(prov[i]);
+    for(int i=0; i<2; i++) free(prov[i]);
     free(prov);
     luCopy(colab_directory, backup_directory, provlen);
     luReplaceChar(colab_directory, '$', ' ');
