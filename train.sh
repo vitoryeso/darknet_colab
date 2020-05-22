@@ -31,8 +31,8 @@ else
     prov=1
     num_trains=$(($num_trains + $prov))
     echo "train ${num_trains}:" >> "${dir}/info.txt"
-    echo >> "${dir}/info.txt" 
-    echo "$(date)" >> "${dir}/info.txt"
+    echo "  date: $(date)" >> "${dir}/info.txt"
+    echo "  config: ${cfg}" >> "${dir}/info.txt"
     echo >> "${dir}/info.txt"
     ./darknet detector train "$1" "$2" "$3" -dont_show > "${dir}"/logs/"${num_trains}"_log.txt
 fi    
