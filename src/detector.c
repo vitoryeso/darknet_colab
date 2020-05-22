@@ -35,7 +35,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
-    char *colab_directory = (char *) malloc( (provlen + 1) *sizeof(char) );
+    char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
     luCopy(cfgname, cfgfile, cfglen);
     char **prov = luSplit(cfgname, '/');
     char **prov2 = luSplit(prov[1], '.');
@@ -361,7 +361,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 best_map = mean_average_precision;
                 printf("New best mAP!\n");
                 char buff[256];
-                sprintf(buff, "%s/%s_best.weights", colab_directory, base);
+                sprintf(buff, "%s/%s_best.weights", backup_directory, base);
                 save_weights(net, buff);
             }
 
@@ -383,7 +383,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_%d.weights", colab_directory, base, iteration);
+            sprintf(buff, "%s/%s_%d.weights", backup_directory, base, iteration);
             save_weights(net, buff);
         }
 
@@ -393,7 +393,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_last.weights", colab_directory, base);
+            sprintf(buff, "%s/%s_last.weights", backup_directory, base);
             save_weights(net, buff);
         }
         free_data(train);
@@ -402,7 +402,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
     char buff[256];
-    sprintf(buff, "%s/%s_final.weights", colab_directory, base);
+    sprintf(buff, "%s/%s_final.weights", backup_directory, base);
     save_weights(net, buff);
 
 #ifdef OPENCV

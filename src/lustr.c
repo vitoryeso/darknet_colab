@@ -5,7 +5,6 @@
 
 void luCat(char *left, char *right)
 {
-    printf("len left: %d \n len right: %d \n", strlen(left), strlen(right));
     left = (char *) realloc(left, sizeof(char) * (strlen(left) + strlen(right) + 1) );
     strcat(left, right); 
 }
