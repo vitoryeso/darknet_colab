@@ -5,7 +5,7 @@
 
 void luCat(char *left, char *right)
 {
-    left = realloc(left, sizeof(char) * (strlen(left) + strlen(right) + 1) );
+    left = (char *) realloc(left, sizeof(char) * (strlen(left) + strlen(right) + 1) );
     strcat(left, right); 
 }
 char *luCopy(char *output, char *input, const int n_chars)
