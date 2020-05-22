@@ -31,7 +31,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char *train_images = option_find_str(options, "train", "data/train.txt");
     char *valid_images = option_find_str(options, "valid", train_images);
     char *backup_directory = option_find_str(options, "backup", "/backup/");
-
+    
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
@@ -40,15 +40,15 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     char **prov = luSplit(cfgname, '/');
     char **prov2 = luSplit(prov[1], '.');
     luCopy(colab_directory, backup_directory, provlen);
-
     luReplaceChar(colab_directory, '$', ' ');
     strcat(colab_directory, "train_");
-
-    for(int i=0;i<strlen(prov2[0]);i++) printf("%c \n", prov2[0][i]);
-//    strcat(colab_directory, prov2[0]);
+    strcat(colab_directory, prov2[0]);
     strcat(colab_directory, "/weights");
-    
+    printf("len: %d \n", strlen(prov2[0])); 
+    for(int i=0;i<strlen(prov2[0]);i++) printf("%c \n", prov2[0][i]);
+    printf("%c \n", prov2[0][strlen(prov2[0])]);
     printf("Colab Directory: %s \n", colab_directory);
+
     network net_map;
     
     if (calc_map) {
@@ -364,7 +364,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 best_map = mean_average_precision;
                 printf("New best mAP!\n");
                 char buff[256];
-                sprintf(buff, "%s/%s_best.weights", colab_directory, base);
+                sprintf(buff, "%s/%s_best.weights", backup_directory, base);
                 save_weights(net, buff);
             }
 
@@ -386,7 +386,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_%d.weights", colab_directory, base, iteration);
+            sprintf(buff, "%s/%s_%d.weights", backup_directory, base, iteration);
             save_weights(net, buff);
         }
 
@@ -396,7 +396,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
             char buff[256];
-            sprintf(buff, "%s/%s_last.weights", colab_directory, base);
+            sprintf(buff, "%s/%s_last.weights", backup_directory, base);
             save_weights(net, buff);
         }
         free_data(train);
@@ -405,7 +405,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
     char buff[256];
-    sprintf(buff, "%s/%s_final.weights", colab_directory, base);
+    sprintf(buff, "%s/%s_final.weights", backup_directory, base);
     save_weights(net, buff);
 
 #ifdef OPENCV
