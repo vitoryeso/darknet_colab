@@ -35,7 +35,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     int provlen = strlen(backup_directory);
     int cfglen = strlen(cfgfile);
     char *cfgname = malloc( (cfglen + 1) * sizeof(char) );
-    char *colab_directory = malloc( (provlen + 1) * sizeof(char) );
+    char colab_directory[100];
     luCopy(cfgname, cfgfile, cfglen);
     char **prov = luSplit(cfgname, '/');
     char **prov2 = luSplit(prov[1], '.');
@@ -44,6 +44,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     strcat(colab_directory, "train_");
     strcat(colab_directory, prov2[0]);
     strcat(colab_directory, "/weights");
+    printf("Colab Directory: %s \n", colab_directory);
 
     network net_map;
     
