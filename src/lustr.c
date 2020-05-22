@@ -3,11 +3,17 @@
 #include <string.h>
 #include "lustr.h"
 
+char *luCat(char *left, char *right)
+{
+    left = realloc(left, (strlen(left) + strlen(right) + 1) );
+    strcat(left, right);
+    return left;
+}
 char *luCopy(char *output, char *input, const int n_chars)
 {
     //we assume that the output has already been allocated.
     int i=0;
-    while( *(input) != '\0' && i < n_chars )
+    while( *(input) != '\0' && i != n_chars )
     {
         output[i] = *(input);
         input++;
@@ -20,11 +26,17 @@ char *luCopy(char *output, char *input, const int n_chars)
 
 char *luReplaceChar(char *input, char find, char replace) 
 {
+    char * output = (char*)malloc(strlen(input));
+
     for (int i = 0; i < strlen(input); i++)
     {
-            if (input[i] == find) input[i] = replace;
+            if (input[i] == find) output[i] = replace;
+                else output[i] = input[i];
     }
-    return input;
+
+    output[strlen(input)] = '\0';
+
+    return output;
 }
 
 char **luSplit(char *input, char delim)
@@ -48,20 +60,20 @@ char **luSplit(char *input, char delim)
         if( *(checkpoint) == delim )
         {
             prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
+            //strncpy(prov[count], input, n_chars);
             luCopy(prov[count], input, n_chars);
             input += (n_chars + 1);
             count++;
             n_chars = 0;
             checkpoint++;
+            continue;
         }
-        else
-        {
-            n_chars++;
-            checkpoint++;
-        }
-    }    
+        n_chars++;
+        checkpoint++;
+    }
     prov[count] = (char *) malloc( (n_chars + 1) * sizeof(char) );
     luCopy(prov[count], input, n_chars);
+    //strncpy(prov[count], input, n_chars);
     return prov;
 }
 
