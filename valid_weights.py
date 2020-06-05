@@ -67,7 +67,7 @@ df = pd.DataFrame(data)
 df = df.sort_values("Iterations")
 df.to_csv("valid_map.csv")
 '''
-print(WEIGHTS_PATH.split("weights")[0] + "valid_map.csv")
+print(WEIGHTS_PATH.replace("\ ", " ").split("weights")[0] + "valid_map.csv")
 
 
 
