@@ -15,8 +15,8 @@ iou = []
 
 #pegando os nomes dos arquivos da pasta
 for i in os.walk(WEIGHTS_PATH):
-	f = i
-	break
+    f = i
+    break
 f = f[2]
 
 if(" " in WEIGHTS_PATH):
@@ -25,14 +25,14 @@ if(" " in WEIGHTS_PATH):
 #filtrando os nomes para pegar so os pesos
 prov = []
 for arq in f:
-	if arq.split(".")[-1] != "weights" or "final" in arq or "last" in arq or "100." in arq:
-		prov.append(arq)
+    if arq.split(".")[-1] != "weights" or "final" in arq or "last" in arq or "100." in arq:
+	prov.append(arq)
 for a in prov:
-	f.remove(a)
+    f.remove(a)
  
 for i in range(len(f)):
-	cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
-        print(cmd)
+    cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
+    print(cmd)
 '''
 	os.system(cmd)
 	arq = open("map.txt", "r")
