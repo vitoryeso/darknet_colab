@@ -32,30 +32,28 @@ for a in prov:
  
 for i in range(len(f)):
     cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
-    print(cmd)
-'''
-	os.system(cmd)
-	arq = open("map.txt", "r")
+    os.system(cmd)
+    arq = open("map.txt", "r")
 
-	while(1):
-		line = arq.readline()
-		if "mAP@" in line:
-			mAP.append(float(line.split(' ')[-3]))
-		if "car" in line:
-			carmAP.append(float(line.split(' ')[8].split('%')[0]))
-		if "bus" in line:
-			busmAP.append(float(line.split(' ')[8].split('%')[0]))
-		if "motorcycle" in line:
-			motmAP.append(float(line.split(' ')[8].split('%')[0]))
-		if "average IoU" in line:
-			iou.append(float(line.split(' ')[-3]))
-		if line == '':
-			break
-	arq.close()
-	os.system("rm map.txt")
+    while(1):
+        line = arq.readline()
+        if "mAP@" in line:
+            mAP.append(float(line.split(' ')[-3]))
+        if "car" in line:
+            carmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "bus" in line:
+            busmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "motorcycle" in line:
+            motmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "average IoU" in line:
+            iou.append(float(line.split(' ')[-3]))
+        if line == '':
+            break
+    arq.close()
+    os.system("rm map.txt")
         
 for i in range(len(f)):
-	f[i] = int(f[i].split('_')[-1].split('.')[0])
+    f[i] = int(f[i].split('_')[-1].split('.')[0])
 
 data = {"Iterations": f, "Avg_mAP": mAP,
 				"car": carmAP,
@@ -65,9 +63,7 @@ data = {"Iterations": f, "Avg_mAP": mAP,
 
 df = pd.DataFrame(data)
 df = df.sort_values("Iterations")
-df.to_csv("valid_map.csv")
-'''
-print(WEIGHTS_PATH.replace("\ ", " ").split("weights")[0] + "valid_map.csv")
+df.to_csv(WEIGHTS_PATH.replace("\ ", " ").split("weights")[0] + "valid_map.csv")
 
 
 
