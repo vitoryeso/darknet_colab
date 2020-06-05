@@ -26,7 +26,7 @@ if(" " in WEIGHTS_PATH):
 prov = []
 for arq in f:
     if arq.split(".")[-1] != "weights" or "final" in arq or "last" in arq or "100." in arq:
-	prov.append(arq)
+        prov.append(arq)
 for a in prov:
     f.remove(a)
  
