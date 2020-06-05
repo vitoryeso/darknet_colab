@@ -5,8 +5,8 @@ import pandas as pd
 DATA_PATH = str(sys.argv[1])
 CFG_PATH = str(sys.argv[2])
 WEIGHTS_PATH = str(sys.argv[3])  
-THRESH = str(sys.argv[4])
-
+THRESH = "" if len(sys.argv) <= 4 else str(sys.argv[4])
+exit()
 mAP = []
 carmAP = []
 busmAP = []
