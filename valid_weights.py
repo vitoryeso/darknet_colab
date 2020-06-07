@@ -73,7 +73,7 @@ cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" +
 os.system(cmd)
 
 # agora testando os melhores pesos no conjunto de testes e salvando o resultado em um arquivo. precisamos alterar o data_file para o conjunto de teste no lugar do de validação
-datafile = open(DATA_PATH, "rw")
+datafile = open(DATA_PATH, "r+")
 datastr = datafile.read().replace("valid.txt", "test.txt")
 datafile.seek(0)
 datafile.truncate(0)
