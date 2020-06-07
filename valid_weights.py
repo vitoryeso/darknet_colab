@@ -2,16 +2,37 @@ import os
 import sys
 import pandas as pd
 
+def read_map(arq_path):
+
+    mAP = []
+    carmAP = []
+    busmAP = []
+    motmAP = []
+    iou = []
+    
+    arq = open(arq_path, "r")
+
+    while(1):
+        line = arq.readline()
+        if "mAP@" in line:
+            mAP.append(float(line.split(' ')[-3]))
+        if "car" in line:
+            carmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "bus" in line:
+            busmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "motorcycle" in line:
+            motmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "average IoU" in line:
+            iou.append(float(line.split(' ')[-3]))
+        if line == '':
+            break
+    return mAP, carmAP, busmAP, motmAP, iou
+
+
 DATA_PATH = str(sys.argv[1])
 CFG_PATH = str(sys.argv[2])
 WEIGHTS_PATH = str(sys.argv[3])  
 THRESH = "" if len(sys.argv) <= 4 else str(sys.argv[4])
-
-mAP = []
-carmAP = []
-busmAP = []
-motmAP = []
-iou = []
 
 #pegando os nomes dos arquivos da pasta
 for i in os.walk(WEIGHTS_PATH):
@@ -33,23 +54,7 @@ for a in prov:
 for i in range(len(f)):
     cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
     os.system(cmd)
-    arq = open("map.txt", "r")
-
-    while(1):
-        line = arq.readline()
-        if "mAP@" in line:
-            mAP.append(float(line.split(' ')[-3]))
-        if "car" in line:
-            carmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "bus" in line:
-            busmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "motorcycle" in line:
-            motmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "average IoU" in line:
-            iou.append(float(line.split(' ')[-3]))
-        if line == '':
-            break
-    arq.close()
+    mAP, carmAP, busmAP, motmAP, iou = read_map("map.txt")
     os.system("rm map.txt")
         
 for i in range(len(f)):
@@ -72,7 +77,12 @@ max_map = df.idxmax()["Avg_mAP"]
 cmd = "cp " + WEIGHTS_PATH + "*" + df["Iterations"][max_map] + ".weights" + " " + MAIN_DIR + "best.weights"
 os.system(cmd)
 
-# agora testando os melhores pesos no conjunto de testes e salvando o resultado em um arquivo
+# agora testando os melhores pesos no conjunto de testes e salvando o resultado em um arquivo. precisamos alterar o data_file para o conjunto de teste no lugar do de validação
+datafile = open(DATA_PATH, "rw")
+datastr = datafile.read().replace("valid.txt", "test.txt")
+datafile.seek(0)
+datafile.truncate(0)
+datafile.write(datastr)
 
-
-
+cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + MAIN_DIR + "best.weights" + " -iou_thresh " + THRESH + "> " + MAIN_DIR + "test_mAP.txt"
+os.system(cmd)
