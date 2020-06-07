@@ -71,7 +71,7 @@ max_map = df.idxmax()["Avg_mAP"]
 cmd = "cp " + WEIGHTS_PATH.replace(" ", "\ ") + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR.replace(" ", "\ ")
 print(cmd)
 os.system(cmd)
-cmd = "mv " MAIN_DIR + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
+cmd = "mv " + MAIN_DIR + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
 print(cmd)
 os.system(cmd)
 
