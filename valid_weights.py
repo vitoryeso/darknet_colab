@@ -68,8 +68,11 @@ df.to_csv(MAIN_DIR + "valid_map.csv")
 
 # salvando uma copia dos melhores pesos na pasta principal da configuracao
 max_map = df.idxmax()["Avg_mAP"]
-cmd = "cp " + WEIGHTS_PATH.replace(" ", "\ ") + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR.replace(" ", "\ ") + "best.weights"
-
+cmd = "cp " + WEIGHTS_PATH.replace(" ", "\ ") + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR.replace(" ", "\ ")
+print(cmd)
+os.system(cmd)
+cmd = "mv " MAIN_DIR + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
+print(cmd)
 os.system(cmd)
 
 # agora testando os melhores pesos no conjunto de testes e salvando o resultado em um arquivo. precisamos alterar o data_file para o conjunto de teste no lugar do de validação
@@ -80,4 +83,5 @@ datafile.truncate(0)
 datafile.write(datastr)
 
 cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + MAIN_DIR + "best.weights" + " -iou_thresh " + THRESH + "> " + MAIN_DIR + "test_mAP.txt"
+print(cmd)
 os.system(cmd)
