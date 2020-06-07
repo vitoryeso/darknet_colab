@@ -74,7 +74,8 @@ df.to_csv(WEIGHTS_PATH.replace("\ ", " ").split("weights")[0] + "valid_map.csv")
 
 # salvando uma copia dos melhores pesos na pasta principal da configuracao
 max_map = df.idxmax()["Avg_mAP"]
-cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map] + ".weights" + " " + MAIN_DIR + "best.weights"
+cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
+
 os.system(cmd)
 
 # agora testando os melhores pesos no conjunto de testes e salvando o resultado em um arquivo. precisamos alterar o data_file para o conjunto de teste no lugar do de validação
