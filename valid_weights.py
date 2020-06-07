@@ -64,11 +64,11 @@ MAIN_DIR = WEIGHTS_PATH.replace("\ ", " ").split("weights")[0]
 
 df = pd.DataFrame(data)
 df = df.sort_values("Iterations")
-df.to_csv(WEIGHTS_PATH.replace("\ ", " ").split("weights")[0] + "valid_map.csv")
+df.to_csv(MAIN_DIR + "valid_map.csv")
 
 # salvando uma copia dos melhores pesos na pasta principal da configuracao
 max_map = df.idxmax()["Avg_mAP"]
-cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
+cmd = "cp " + WEIGHTS_PATH.replace(" ", "\ ") + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
 
 os.system(cmd)
 
