@@ -2,32 +2,11 @@ import os
 import sys
 import pandas as pd
 
-def read_map(arq_path):
-
-    mAP = []
-    carmAP = []
-    busmAP = []
-    motmAP = []
-    iou = []
-    
-    arq = open(arq_path, "r")
-
-    while(1):
-        line = arq.readline()
-        if "mAP@" in line:
-            mAP.append(float(line.split(' ')[-3]))
-        if "car" in line:
-            carmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "bus" in line:
-            busmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "motorcycle" in line:
-            motmAP.append(float(line.split(' ')[8].split('%')[0]))
-        if "average IoU" in line:
-            iou.append(float(line.split(' ')[-3]))
-        if line == '':
-            break
-    return mAP, carmAP, busmAP, motmAP, iou
-
+mAP = []
+carmAP = []
+busmAP = []
+motmAP = []
+iou = []
 
 DATA_PATH = str(sys.argv[1])
 CFG_PATH = str(sys.argv[2])
@@ -54,7 +33,22 @@ for a in prov:
 for i in range(len(f)):
     cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
     os.system(cmd)
-    mAP, carmAP, busmAP, motmAP, iou = read_map("map.txt")
+    arq = open("map.txt", "r")
+
+    while(1):
+        line = arq.readline()
+        if "mAP@" in line:
+            mAP.append(float(line.split(' ')[-3]))
+        if "car" in line:
+            carmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "bus" in line:
+            busmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "motorcycle" in line:
+            motmAP.append(float(line.split(' ')[8].split('%')[0]))
+        if "average IoU" in line:
+            iou.append(float(line.split(' ')[-3]))
+        if line == '':
+            break
     os.system("rm map.txt")
         
 for i in range(len(f)):
