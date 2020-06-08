@@ -66,9 +66,11 @@ df = pd.DataFrame(data)
 df = df.sort_values("Iterations")
 df.to_csv(MAIN_DIR + "valid_map.csv")
 
+MAIN_DIR = MAIN_DIR.replace(" ", "\ ")
+
 # salvando uma copia dos melhores pesos na pasta principal da configuracao
 max_map = df.idxmax()["Avg_mAP"]
-cmd = "cp " + WEIGHTS_PATH.replace(" ", "\ ") + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR.replace(" ", "\ ")
+cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR
 print(cmd)
 os.system(cmd)
 cmd = "mv " + MAIN_DIR + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
