@@ -70,10 +70,10 @@ MAIN_DIR = MAIN_DIR.replace(" ", "\ ")
 
 # salvando uma copia dos melhores pesos na pasta principal da configuracao
 max_map = df.idxmax()["Avg_mAP"]
-cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR
+cmd = "cp " + WEIGHTS_PATH + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + WEIGHTS_PATH + "best.weights"
 print(cmd)
 os.system(cmd)
-cmd = "mv " + MAIN_DIR + "*" + str(df["Iterations"][max_map]) + ".weights" + " " + MAIN_DIR + "best.weights"
+cmd = "mv " + WEIGHTS_PATH + "best.weights" + " " + MAIN_DIR
 print(cmd)
 os.system(cmd)
 
@@ -83,6 +83,7 @@ datastr = datafile.read().replace("valid.txt", "test.txt")
 datafile.seek(0)
 datafile.truncate(0)
 datafile.write(datastr)
+datafile.close()
 
 cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + MAIN_DIR + "best.weights" + " -iou_thresh " + THRESH + "> " + MAIN_DIR + "test_mAP.txt"
 print(cmd)
