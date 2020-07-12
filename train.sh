@@ -27,7 +27,7 @@ if [ "$3" == "" ]; then
         echo "  date: $(date)" >> "${dir}/info.txt"
         echo "  config: ${cfg}" >> "${dir}/info.txt"
         echo >> "${dir}/info.txt"
-        if [[ $STR2 == *"$tiny"* ]]; then
+        if [[ "$STR2" == *"$tiny"* ]]; then
             wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.conv.29
             ./darknet detector train "$1" "$2" yolov4-tiny.conv.29 -dont_show > "${dir}"/logs/"${num_trains}"_log.txt 
         else
