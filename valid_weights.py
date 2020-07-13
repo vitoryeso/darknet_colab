@@ -32,7 +32,7 @@ for a in prov:
  
 for i in range(len(f)):
     cmd = "./darknet detector map " + DATA_PATH + " " + CFG_PATH + " " + WEIGHTS_PATH + f[i] + " -iou_thresh "+ THRESH + "> map.txt"
-    print(cmd)
+    os.system(cmd)
     arq = open("map.txt", "r")
 
     while(1):
